@@ -465,7 +465,7 @@ unsigned int dhcp_hook_function(unsigned int hooknum,
 
     if(skb->protocol != htons(ETH_P_IP))/*Jagadeesh: If not Internet Protocol Packet Just dont touch*/
     {
-    	printk(KERN_DEBUG"%s: packet is not IP packet",__func__);
+    	printk(KERN_DEBUG"%s: packet is not IP packet", __func__);
     	return NF_ACCEPT;
     }
     //printk(KERN_INFO"pkt on in:%s out:%s", in->name, out->name);
