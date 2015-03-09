@@ -38,6 +38,7 @@ bool is_dhcp_server = 1;
 module_param(is_dhcp_server, bool , S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(is_dhcp_server, "If box is working as DHCP relay agent unset this variable when loading the module, by default it is set\n");
 MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Ajit V");
 MODULE_AUTHOR("Jagadeesh Pagadala");
 MODULE_DESCRIPTION("DHCP snoop and IP spoof");
 
@@ -770,10 +771,10 @@ unsigned int data_hook_function(unsigned int hooknum, struct sk_buff *skb,
     struct ethhdr *eh;
     struct in_addr saddr;
     struct trusted_interface_list *ptr = trusted_if_head;
-    u16 vlan_tag;
+    u16 vlan_tag = 0;
 
     /* How to check the vlan packet ... ?*/
-    if (vlan_get_tag(skb, &vlan_tag)<0) {
+    if (vlan_get_tag(skb, &vlan_tag) < 0) {
         printk(KERN_DEBUG"%s: packet is not VLAN tagged ",__func__);
     }else 
         printk(KERN_DEBUG"%s: VLAN tag is %d", __func__, vlan_tag);
@@ -782,6 +783,7 @@ unsigned int data_hook_function(unsigned int hooknum, struct sk_buff *skb,
     /* TODO: add a check to verify VLAN tool*/
     if (skb->protocol != htons (ETH_P_IP))
 	{
+
 		return NF_ACCEPT;
 	}
 
